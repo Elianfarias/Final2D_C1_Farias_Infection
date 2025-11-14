@@ -32,16 +32,8 @@ namespace RPGCorruption.Core
 
         private void Awake()
         {
-            // Inicializar GameConfig si está asignado
             if (gameConfig != null)
-            {
                 GameConfig.Instance = gameConfig;
-                Debug.Log("GameConfig initialized!");
-            }
-            else
-            {
-                Debug.LogWarning("GameConfig not assigned! Please assign it in the inspector.");
-            }
         }
 
         #region Setup Buttons (Inspector)
@@ -49,15 +41,12 @@ namespace RPGCorruption.Core
         [ContextMenu("1. Setup Scene")]
         public void SetupScene()
         {
-            Debug.Log("=== Setting up scene ===");
 
             CreateCamera();
             CreateTileGrid();
             CreatePlayer();
             CreateEnemySpawner();
-            CreateHelpOverlay();
 
-            Debug.Log("Scene setup complete!");
         }
 
         [ContextMenu("2. Create Camera")]
@@ -74,56 +63,34 @@ namespace RPGCorruption.Core
                 mainCamera.orthographicSize = 5;
                 mainCamera.transform.position = new Vector3(0, 0, -10);
 
-                Debug.Log("Camera created!");
-            }
-            else
-            {
-                Debug.Log("Camera already exists!");
             }
         }
 
         [ContextMenu("3. Create TileGrid")]
         public void CreateTileGrid()
         {
-            tileGrid = FindObjectOfType<TileGrid>();
+            tileGrid = Object.FindFirstObjectByType<TileGrid>();
 
             if (tileGrid == null)
             {
-                GameObject gridObj = new GameObject("TileGrid");
+                GameObject gridObj = new("TileGrid");
                 tileGrid = gridObj.AddComponent<TileGrid>();
-
-                Debug.Log("TileGrid created!");
-            }
-            else
-            {
-                Debug.Log("TileGrid already exists!");
             }
         }
 
         [ContextMenu("4. Create Player")]
         public void CreatePlayer()
         {
-            playerController = FindObjectOfType<PlayerController>();
+            playerController = Object.FindFirstObjectByType<PlayerController>();
 
             if (playerController == null)
             {
-                GameObject playerObj = new GameObject("Player");
-                playerObj.transform.position = new Vector3(spawnPosition.x, spawnPosition.y, 0);
+                GameObject playerObj = new("Player");
+                playerObj.transform.position = (Vector3)spawnPosition;
 
                 // Agregar componentes
                 SpriteRenderer sr = playerObj.AddComponent<SpriteRenderer>();
                 sr.sortingOrder = 10;
-
-                // Crear sprite temporal (cuadrado azul)
-                Texture2D texture = new Texture2D(32, 32);
-                Color[] pixels = new Color[32 * 32];
-                for (int i = 0; i < pixels.Length; i++)
-                {
-                    pixels[i] = Color.blue;
-                }
-                texture.SetPixels(pixels);
-                texture.Apply();
-                sr.sprite = Sprite.Create(texture, new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f), 32);
 
                 playerController = playerObj.AddComponent<PlayerController>();
                 playerObj.AddComponent<PlayerMovement>();
@@ -133,12 +100,6 @@ namespace RPGCorruption.Core
                 {
                     playerController.InitializeCharacter(playerCharacterData, startingLevel);
                 }
-
-                Debug.Log("Player created!");
-            }
-            else
-            {
-                Debug.Log("Player already exists!");
             }
         }
 
@@ -149,50 +110,22 @@ namespace RPGCorruption.Core
             {
                 Vector3 testPosition = new Vector3(5, 5, 0);
                 playerController.Movement.SetTargetPosition(testPosition);
-                Debug.Log($"Player moving to {testPosition}");
-            }
-            else
-            {
-                Debug.LogWarning("Player not found! Create player first.");
-            }
-        }
-
-        [ContextMenu("6. Create Help Overlay")]
-        public void CreateHelpOverlay()
-        {
-            // Buscar si ya existe
-            RPGCorruption.UI.HelpOverlay existing = FindObjectOfType<RPGCorruption.UI.HelpOverlay>();
-
-            if (existing == null)
-            {
-                GameObject helpObj = new GameObject("HelpOverlay");
-                helpObj.AddComponent<RPGCorruption.UI.HelpOverlay>();
-
-                Debug.Log("HelpOverlay created! Press H to toggle help menu.");
-            }
-            else
-            {
-                Debug.Log("HelpOverlay already exists!");
             }
         }
 
         [ContextMenu("7. Create Enemy Spawner")]
         public void CreateEnemySpawner()
         {
-            enemySpawner = FindObjectOfType<EnemySpawner>();
+            enemySpawner = Object.FindFirstObjectByType<EnemySpawner>();
 
             if (enemySpawner == null)
             {
-                GameObject spawnerObj = new GameObject("EnemySpawner");
+                GameObject spawnerObj = new("EnemySpawner");
                 enemySpawner = spawnerObj.AddComponent<EnemySpawner>();
-
-                Debug.Log("EnemySpawner created!");
 
                 // Si hay enemigos de prueba asignados, spawnerlos
                 if (testEnemies != null && testEnemies.Length > 0)
-                {
                     SpawnTestEnemies();
-                }
             }
             else
             {
@@ -204,15 +137,7 @@ namespace RPGCorruption.Core
         public void SpawnTestEnemies()
         {
             if (enemySpawner == null)
-            {
                 CreateEnemySpawner();
-            }
-
-            if (testEnemies == null || testEnemies.Length == 0)
-            {
-                Debug.LogWarning("No test enemies assigned! Assign EnemyData in the inspector.");
-                return;
-            }
 
             // Spawn enemigos en posiciones aleatorias
             for (int i = 0; i < numberOfEnemies; i++)
@@ -229,14 +154,10 @@ namespace RPGCorruption.Core
 
                 // Snap to grid si TileGrid existe
                 if (tileGrid != null)
-                {
                     randomPos = tileGrid.SnapToGrid(randomPos);
-                }
 
                 enemySpawner.SpawnEnemy(randomEnemy, randomPos);
             }
-
-            Debug.Log($"Spawned {numberOfEnemies} test enemies!");
         }
 
         #endregion
@@ -247,24 +168,16 @@ namespace RPGCorruption.Core
         {
             // Auto-encontrar referencias si no están asignadas
             if (tileGrid == null)
-            {
-                tileGrid = FindObjectOfType<TileGrid>();
-            }
+                tileGrid = Object.FindFirstObjectByType<TileGrid>();
 
             if (playerController == null)
-            {
-                playerController = FindObjectOfType<PlayerController>();
-            }
+                playerController = Object.FindFirstObjectByType<PlayerController>();
 
             if (mainCamera == null)
-            {
                 mainCamera = Camera.main;
-            }
 
             if (enemySpawner == null)
-            {
-                enemySpawner = FindObjectOfType<EnemySpawner>();
-            }
+                enemySpawner = Object.FindFirstObjectByType<EnemySpawner>();
         }
 
         #endregion
@@ -273,22 +186,28 @@ namespace RPGCorruption.Core
 
         private void OnGUI()
         {
-            // Estilo mejorado
-            GUIStyle titleStyle = new GUIStyle(GUI.skin.label);
-            titleStyle.fontSize = 18;
-            titleStyle.fontStyle = FontStyle.Bold;
+            GUIStyle titleStyle = new(GUI.skin.label)
+            {
+                fontSize = 18,
+                fontStyle = FontStyle.Bold
+            };
             titleStyle.normal.textColor = Color.white;
 
-            GUIStyle labelStyle = new GUIStyle(GUI.skin.label);
-            labelStyle.fontSize = 15;
+            GUIStyle labelStyle = new(GUI.skin.label)
+            {
+                fontSize = 15
+            };
             labelStyle.normal.textColor = Color.white;
 
-            GUIStyle instructionStyle = new GUIStyle(GUI.skin.label);
-            instructionStyle.fontSize = 13;
-            instructionStyle.fontStyle = FontStyle.Italic;
+            GUIStyle instructionStyle = new(GUI.skin.label)
+            {
+                fontSize = 13,
+                fontStyle = FontStyle.Italic
+            };
             instructionStyle.normal.textColor = Color.yellow;
 
-            GUIStyle boxStyle = new GUIStyle(GUI.skin.box);
+            GUIStyle gUIStyle = new(GUI.skin.box);
+            GUIStyle boxStyle = gUIStyle;
             boxStyle.normal.background = MakeTex(2, 2, new Color(0.1f, 0.1f, 0.1f, 0.8f));
 
             GUILayout.BeginArea(new Rect(Screen.width - 310, 10, 300, 250));
@@ -312,16 +231,13 @@ namespace RPGCorruption.Core
             GUILayout.EndArea();
         }
 
-        /// <summary>
-        /// Crea una textura de color sólido
-        /// </summary>
         private Texture2D MakeTex(int width, int height, Color col)
         {
             Color[] pix = new Color[width * height];
             for (int i = 0; i < pix.Length; i++)
                 pix[i] = col;
 
-            Texture2D result = new Texture2D(width, height);
+            Texture2D result = new(width, height);
             result.SetPixels(pix);
             result.Apply();
             return result;
