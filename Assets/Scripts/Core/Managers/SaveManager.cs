@@ -38,13 +38,13 @@ namespace RPGCorruption.Core.Managers
         private const string BACKUP_SUFFIX = "_backup";
 
         // Current loaded save
-        private SaveData.Runtime.SaveData currentSave;
+        private SaveData currentSave;
         private int currentSlotIndex = -1;
 
         // Properties
         public bool HasCurrentSave => currentSave != null;
         public int CurrentSlotIndex => currentSlotIndex;
-        public SaveData.Runtime.SaveData CurrentSave => currentSave;
+        public SaveData CurrentSave => currentSave;
 
         private void Awake()
         {
@@ -182,7 +182,7 @@ namespace RPGCorruption.Core.Managers
                 string json = File.ReadAllText(filePath);
 
                 // Deserializar
-                SaveData.Runtime.SaveData loadedSave = SaveData.Runtime.SaveData.FromJson(json);
+                SaveData loadedSave = SaveData.FromJson(json);
 
                 if (loadedSave == null)
                 {
@@ -238,9 +238,9 @@ namespace RPGCorruption.Core.Managers
         /// <summary>
         /// Crea una nueva partida
         /// </summary>
-        public SaveData.Runtime.SaveData CreateNewGame()
+        public SaveData CreateNewGame()
         {
-            currentSave = new SaveData.Runtime.SaveData();
+            currentSave = new SaveData();
             currentSlotIndex = -1; // Sin slot hasta que se guarde
 
             Debug.Log("New game created!");
@@ -390,9 +390,9 @@ namespace RPGCorruption.Core.Managers
         /// <summary>
         /// Obtiene todos los saves disponibles
         /// </summary>
-        public List<SaveData.Runtime.SaveSummary> GetAllSaves()
+        public List<SaveSummary> GetAllSaves()
         {
-            List<SaveData.Runtime.SaveSummary> saves = new List<SaveData.Runtime.SaveSummary>();
+            List<SaveSummary> saves = new();
 
             for (int i = 0; i < maxSaveSlots; i++)
             {
@@ -401,7 +401,7 @@ namespace RPGCorruption.Core.Managers
                     try
                     {
                         string json = File.ReadAllText(GetSaveFilePath(i));
-                        SaveData.Runtime.SaveData save = SaveData.Runtime.SaveData.FromJson(json);
+                        SaveData save = SaveData.FromJson(json);
 
                         if (save != null && save.IsValid())
                         {
@@ -432,7 +432,7 @@ namespace RPGCorruption.Core.Managers
                 {
                     try
                     {
-                        FileInfo fileInfo = new FileInfo(GetSaveFilePath(i));
+                        FileInfo fileInfo = new(GetSaveFilePath(i));
                         if (fileInfo.LastWriteTime > mostRecentTime)
                         {
                             mostRecentTime = fileInfo.LastWriteTime;

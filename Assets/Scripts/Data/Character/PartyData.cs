@@ -247,7 +247,7 @@ namespace RPGCorruption.Data.Runtime
         public int GetAverageLevel()
         {
             if (IsEmpty) return 1;
-            return Mathf.RoundToInt(members.Average(m => m.Level));
+            return Mathf.RoundToInt((float)members.Average(m => m.Level));
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace RPGCorruption.Data.Runtime
         public int GetAverageInfection()
         {
             if (IsEmpty) return 0;
-            return Mathf.RoundToInt(members.Average(m => m.InfectionLevel));
+            return Mathf.RoundToInt((float)members.Average(m => m.InfectionLevel));
         }
 
         /// <summary>

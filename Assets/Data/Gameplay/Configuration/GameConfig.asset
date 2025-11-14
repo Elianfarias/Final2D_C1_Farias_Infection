@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31ed7bfa066f18048a35f2e9d4d5f5f4, type: 3}
+  m_Name: GameConfig
+  m_EditorClassIdentifier: 
+  maxLevel: 50
+  expCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  baseExpRequired: 100
+  expMultiplier: 1.5
+  baseCritMultiplier: 1.5
+  maxPartySize: 3
+  speedToTurnRatio: 1
+  maxInfectionLevel: 100
+  infectionDefenseDebuff: 0.3
+  infectionDamageBonus: 0.5
+  corruptionThreshold: 80
+  fullCorruptionLevel: 100
+  startingGold: 500
+  shopPriceMultiplier: 1
+  sellPriceRatio: 0.5
+  maxInventorySlots: 50
+  maxConsumableStack: 99
+  enemyStatMultiplier: 1
+  expGainMultiplier: 1
+  goldGainMultiplier: 1
