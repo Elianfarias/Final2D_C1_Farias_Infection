@@ -120,14 +120,22 @@ namespace RPGCorruption.Map
         private void InitiateBattle(PlayerController playerController)
         {
             if (enemyTemplate == null)
+            {
+                Debug.LogError("Cannot initiate battle: No EnemyData assigned!");
                 return;
+            }
 
             Debug.Log($"⚔️ Battle started with {enemyTemplate.CharacterName} (Level {enemyTemplate.Level})!");
 
-            // TODO: Aquí se llamará al BattleManager cuando esté implementado
-            // Por ahora, solo mostramos un mensaje y "derrotamos" al enemigo
+            // Iniciar batalla usando BattleInitializer
+            Combat.BattleInitializer.StartBattle(
+                playerController.Character,
+                enemyTemplate
+            );
 
-            // Simular victoria temporal
+            // NOTA: OnBattleWon() se llamará desde BattleManager después de ganar
+            // Por ahora, para testing sin BattleScene, simular victoria:
+            // Comentar esta línea cuando BattleScene esté configurada:
             OnBattleWon();
         }
 
@@ -158,7 +166,9 @@ namespace RPGCorruption.Map
                 yield return null;
             }
 
+            // Desactivar o destruir
             gameObject.SetActive(false);
+            // Destroy(gameObject); // Descomentar si prefieres destruir
         }
 
         [ContextMenu("Reset Enemy")]
