@@ -20,6 +20,7 @@ namespace RPGCorruption.Combat
         [SerializeField] private Button skillButton;
         [SerializeField] private Button itemButton;
         [SerializeField] private Button runButton;
+        [SerializeField] private Button targetButton;
 
         [Header("Info Panels")]
         [SerializeField] private TextMeshProUGUI battleMessageText;
@@ -34,9 +35,9 @@ namespace RPGCorruption.Combat
         [SerializeField] private GameObject targetSelectionPanel;
         [SerializeField] private GameObject resultsPanel;
 
-        private List<GameObject> playerInfoUI = new List<GameObject>();
-        private List<GameObject> enemyInfoUI = new List<GameObject>();
-        private List<Button> enemyTargetButtons = new List<Button>();
+        private List<GameObject> playerInfoUI = new();
+        private List<GameObject> enemyInfoUI = new();
+        private List<Button> enemyTargetButtons = new();
 
         private void Start()
         {
@@ -260,25 +261,27 @@ namespace RPGCorruption.Combat
             if (battleManager.EnemyParty == null || targetSelectionPanel == null)
                 return;
 
+            if (targetButton == null)
+                return;
+
             foreach (var enemy in battleManager.EnemyParty)
             {
                 if (enemy.IsDead) continue;
 
-                GameObject buttonObj = new GameObject($"Target_{enemy.Template.CharacterName}");
-                buttonObj.transform.SetParent(targetSelectionPanel.transform);
+                Button buttonInstance = Instantiate(targetButton, targetSelectionPanel.transform);
 
-                Button button = buttonObj.AddComponent<Button>();
+                TextMeshProUGUI textComponent = buttonInstance.GetComponentInChildren<TextMeshProUGUI>();
 
-                GameObject textObj = new GameObject("Text");
-                textObj.transform.SetParent(buttonObj.transform);
-                TextMeshProUGUI text = textObj.AddComponent<TextMeshProUGUI>();
-                text.text = enemy.Template.CharacterName;
-                text.alignment = TextAlignmentOptions.Center;
+                if (textComponent != null)
+                {
+                    textComponent.text = enemy.Template.CharacterName;
+                    textComponent.alignment = TextAlignmentOptions.Center;
+                }
 
                 CharacterInstance target = enemy;
-                button.onClick.AddListener(() => OnTargetSelected(target));
+                buttonInstance.onClick.AddListener(() => OnTargetSelected(target));
 
-                enemyTargetButtons.Add(button);
+                enemyTargetButtons.Add(buttonInstance);
             }
         }
 
