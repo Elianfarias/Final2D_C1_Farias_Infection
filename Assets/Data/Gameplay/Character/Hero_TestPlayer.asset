@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35fada5f2bbfd3e41b08e172496df318, type: 3}
   m_Name: Hero_TestPlayer
   m_EditorClassIdentifier: 
-  characterName: Test
+  characterName: Elian's Hero
   characterId: 1
   description: Test
   baseMaxHP: 100

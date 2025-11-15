@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTemplate: {fileID: 11400000, guid: 6f26d5dc15d13fd4595487b9578c94fb, type: 2}
   isBoss: 0
-  isStationary: 0
+  isStationary: 1
   detectionRange: 3
   moveSpeed: 2
   spriteRenderer: {fileID: 0}

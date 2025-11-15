@@ -19,7 +19,6 @@ namespace RPGCorruption.Core.Managers
 
         [Header("Configuration")]
         [SerializeField] private int maxSaveSlots = 3;
-        [SerializeField] private bool useEncryption = false; // Para futura implementación
         [SerializeField] private bool createBackups = true;
 
         // Paths

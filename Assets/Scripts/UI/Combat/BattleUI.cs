@@ -40,7 +40,6 @@ namespace RPGCorruption.Combat
 
         private void Start()
         {
-            // Configurar botones
             if (attackButton != null)
                 attackButton.onClick.AddListener(OnAttackButtonClicked);
 
@@ -53,7 +52,6 @@ namespace RPGCorruption.Combat
             if (runButton != null)
                 runButton.onClick.AddListener(OnRunButtonClicked);
 
-            // Suscribirse a eventos del BattleManager
             if (battleManager != null)
             {
                 battleManager.OnStateChanged += OnBattleStateChanged;
@@ -63,7 +61,8 @@ namespace RPGCorruption.Combat
                 battleManager.OnBattleLost += OnBattleLost;
             }
 
-            // Ocultar paneles inicialmente
+            StartCoroutine(DelayedUpdate());
+
             ShowActionPanel(false);
             ShowTargetSelection(false);
             ShowResultsPanel(false);
@@ -71,7 +70,6 @@ namespace RPGCorruption.Combat
 
         private void OnDestroy()
         {
-            // Desuscribirse de eventos
             if (battleManager != null)
             {
                 battleManager.OnStateChanged -= OnBattleStateChanged;
@@ -84,13 +82,15 @@ namespace RPGCorruption.Combat
 
         #region UI Updates
 
-        /// <summary>
-        /// Actualiza la UI cuando cambia el estado de batalla
-        /// </summary>
+        private System.Collections.IEnumerator DelayedUpdate()
+        {
+            yield return null;
+
+            UpdateAllCharacterInfo();
+        }
+
         private void OnBattleStateChanged(BattleState newState)
         {
-            Debug.Log($"UI: Battle state changed to {newState}");
-
             switch (newState)
             {
                 case BattleState.Start:
@@ -118,27 +118,18 @@ namespace RPGCorruption.Combat
             }
         }
 
-        /// <summary>
-        /// Actualiza la UI cuando se inflige daño
-        /// </summary>
         private void OnDamageDealt(CharacterInstance target, int damage)
         {
             ShowMessage($"{target.Template.CharacterName} took {damage} damage!");
             UpdateCharacterInfo(target);
         }
 
-        /// <summary>
-        /// Actualiza la UI cuando un personaje es derrotado
-        /// </summary>
         private void OnCharacterDefeated(CharacterInstance character)
         {
             ShowMessage($"{character.Template.CharacterName} was defeated!");
             UpdateCharacterInfo(character);
         }
 
-        /// <summary>
-        /// Muestra pantalla de victoria
-        /// </summary>
         private void OnBattleWon(BattleRewards rewards)
         {
             ShowMessage("Victory!");
@@ -148,9 +139,6 @@ namespace RPGCorruption.Combat
             // TODO: Mostrar recompensas en el panel de resultados
         }
 
-        /// <summary>
-        /// Muestra pantalla de derrota
-        /// </summary>
         private void OnBattleLost()
         {
             ShowMessage("Defeat...");
@@ -158,15 +146,10 @@ namespace RPGCorruption.Combat
             ShowResultsPanel(true);
         }
 
-        /// <summary>
-        /// Actualiza la información de todos los personajes
-        /// </summary>
         public void UpdateAllCharacterInfo()
         {
-            // Limpiar UI existente
             ClearCharacterInfo();
 
-            // Crear UI para jugadores
             if (battleManager.PlayerParty != null)
             {
                 foreach (var player in battleManager.PlayerParty)
@@ -175,7 +158,6 @@ namespace RPGCorruption.Combat
                 }
             }
 
-            // Crear UI para enemigos
             if (battleManager.EnemyParty != null)
             {
                 foreach (var enemy in battleManager.EnemyParty)
@@ -185,20 +167,13 @@ namespace RPGCorruption.Combat
             }
         }
 
-        /// <summary>
-        /// Crea un elemento de UI para un personaje
-        /// </summary>
         private void CreateCharacterInfoUI(CharacterInstance character, Transform parent, List<GameObject> list)
         {
             if (characterInfoPrefab == null)
-            {
-                Debug.LogWarning("Character Info Prefab not assigned!");
                 return;
-            }
 
             GameObject infoObj = Instantiate(characterInfoPrefab, parent);
 
-            // Actualizar texto (asumiendo que el prefab tiene estos componentes)
             TextMeshProUGUI nameText = infoObj.transform.Find("NameText")?.GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI hpText = infoObj.transform.Find("HPText")?.GetComponent<TextMeshProUGUI>();
             Slider hpSlider = infoObj.transform.Find("HPSlider")?.GetComponent<Slider>();
@@ -218,19 +193,12 @@ namespace RPGCorruption.Combat
             list.Add(infoObj);
         }
 
-        /// <summary>
-        /// Actualiza la info de un personaje específico
-        /// </summary>
         private void UpdateCharacterInfo(CharacterInstance character)
         {
             // Por simplicidad, actualizamos todo
-            // En un juego real, actualizarías solo el elemento específico
             UpdateAllCharacterInfo();
         }
 
-        /// <summary>
-        /// Limpia toda la info de personajes
-        /// </summary>
         private void ClearCharacterInfo()
         {
             foreach (var obj in playerInfoUI)
@@ -250,56 +218,33 @@ namespace RPGCorruption.Combat
 
         #region Button Handlers
 
-        /// <summary>
-        /// Cuando el jugador presiona Attack
-        /// </summary>
         private void OnAttackButtonClicked()
         {
-            Debug.Log("Attack button clicked");
-
-            // Mostrar selección de objetivos enemigos
             ShowTargetSelection(true);
             CreateEnemyTargetButtons();
         }
 
-        /// <summary>
-        /// Cuando el jugador presiona Skill
-        /// </summary>
         private void OnSkillButtonClicked()
         {
-            Debug.Log("Skill button clicked");
             ShowMessage("Skills not yet implemented!");
 
             // TODO: Mostrar lista de habilidades disponibles
         }
 
-        /// <summary>
-        /// Cuando el jugador presiona Item
-        /// </summary>
         private void OnItemButtonClicked()
         {
-            Debug.Log("Item button clicked");
             ShowMessage("Items not yet implemented!");
 
             // TODO: Mostrar inventario
         }
 
-        /// <summary>
-        /// Cuando el jugador presiona Run
-        /// </summary>
         private void OnRunButtonClicked()
         {
-            Debug.Log("Run button clicked");
             battleManager.PlayerChooseRun();
         }
 
-        /// <summary>
-        /// Cuando el jugador selecciona un objetivo
-        /// </summary>
         private void OnTargetSelected(CharacterInstance target)
         {
-            Debug.Log($"Target selected: {target.Template.CharacterName}");
-
             ShowTargetSelection(false);
             battleManager.PlayerChooseAttack(target);
         }
@@ -308,18 +253,13 @@ namespace RPGCorruption.Combat
 
         #region Target Selection
 
-        /// <summary>
-        /// Crea botones para seleccionar enemigos como objetivos
-        /// </summary>
         private void CreateEnemyTargetButtons()
         {
-            // Limpiar botones anteriores
             ClearEnemyTargetButtons();
 
             if (battleManager.EnemyParty == null || targetSelectionPanel == null)
                 return;
 
-            // Crear un botón por cada enemigo vivo
             foreach (var enemy in battleManager.EnemyParty)
             {
                 if (enemy.IsDead) continue;
@@ -329,30 +269,26 @@ namespace RPGCorruption.Combat
 
                 Button button = buttonObj.AddComponent<Button>();
 
-                // Agregar texto al botón
                 GameObject textObj = new GameObject("Text");
                 textObj.transform.SetParent(buttonObj.transform);
                 TextMeshProUGUI text = textObj.AddComponent<TextMeshProUGUI>();
                 text.text = enemy.Template.CharacterName;
                 text.alignment = TextAlignmentOptions.Center;
 
-                // Configurar onClick
-                CharacterInstance target = enemy; // Capturar en closure
+                CharacterInstance target = enemy;
                 button.onClick.AddListener(() => OnTargetSelected(target));
 
                 enemyTargetButtons.Add(button);
             }
         }
 
-        /// <summary>
-        /// Limpia los botones de selección de objetivos
-        /// </summary>
         private void ClearEnemyTargetButtons()
         {
             foreach (var button in enemyTargetButtons)
             {
                 if (button != null) Destroy(button.gameObject);
             }
+
             enemyTargetButtons.Clear();
         }
 
@@ -360,18 +296,12 @@ namespace RPGCorruption.Combat
 
         #region Panel Visibility
 
-        /// <summary>
-        /// Muestra u oculta el panel de acciones
-        /// </summary>
         private void ShowActionPanel(bool show)
         {
             if (actionPanel != null)
                 actionPanel.SetActive(show);
         }
 
-        /// <summary>
-        /// Muestra u oculta el panel de selección de objetivos
-        /// </summary>
         private void ShowTargetSelection(bool show)
         {
             if (targetSelectionPanel != null)
@@ -381,24 +311,16 @@ namespace RPGCorruption.Combat
                 ClearEnemyTargetButtons();
         }
 
-        /// <summary>
-        /// Muestra u oculta el panel de resultados
-        /// </summary>
         private void ShowResultsPanel(bool show)
         {
             if (resultsPanel != null)
                 resultsPanel.SetActive(show);
         }
 
-        /// <summary>
-        /// Muestra un mensaje en el área de batalla
-        /// </summary>
         private void ShowMessage(string message)
         {
             if (battleMessageText != null)
                 battleMessageText.text = message;
-
-            Debug.Log($"Battle Message: {message}");
         }
 
         #endregion
