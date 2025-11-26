@@ -50,17 +50,14 @@ namespace RPGCorruption.Map
         public EnemyMapEntity SpawnEnemy(EnemyData enemyData, Vector3 position, bool isBoss = false)
         {
             if (enemyData == null)
-            {
-                Debug.LogError("Cannot spawn enemy: EnemyData is null!");
                 return null;
-            }
 
             GameObject enemyObj;
 
             enemyObj = CreateEnemyGameObject(position);
 
             enemyObj.name = $"{enemyData.CharacterName} ({enemyData.Level})";
-            enemyObj.layer = enemyData.Layer;
+            enemyObj.layer = (int)Mathf.Log(enemyData.Layer.value, 2);
             SpriteRenderer spriteEnemy = enemyObj.GetComponent<SpriteRenderer>();
             spriteEnemy.sortingLayerName = enemyData.SortingLayerName;
 
@@ -90,7 +87,6 @@ namespace RPGCorruption.Map
             enemyObj.transform.position = position;
             enemyObj.transform.parent = transform;
 
-            // Agregar componentes necesarios
             SpriteRenderer sr = enemyObj.AddComponent<SpriteRenderer>();
             sr.sortingOrder = 5;
 
@@ -105,15 +101,13 @@ namespace RPGCorruption.Map
         {
             for (int i = 0; i < maxRandomEnemies; i++)
             {
-                // Posición aleatoria dentro del área
                 Vector3 randomPos = new Vector3(
                     Random.Range(spawnAreaMin.x, spawnAreaMax.x),
                     Random.Range(spawnAreaMin.y, spawnAreaMax.y),
                     0
                 );
 
-                // Enemigo aleatorio del pool
-                EnemyData randomEnemy = randomEnemyPool[Random.Range(0, randomEnemyPool.Count)];
+                EnemyData randomEnemy = randomEnemyPool[Random.Range(0, randomEnemyPool.Count - 1)];
 
                 SpawnEnemy(randomEnemy, randomPos);
             }
