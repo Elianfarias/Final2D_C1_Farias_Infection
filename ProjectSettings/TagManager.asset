@@ -44,15 +44,18 @@ TagManager:
   - name: Ground
     uniqueID: 4176789115
     locked: 0
-  - name: Foreground
-    uniqueID: 3299047165
+  - name: Overlay
+    uniqueID: 3951968783
     locked: 0
   - name: Player
     uniqueID: 4004367571
     locked: 0
-  - name: Obstacles
-    uniqueID: 3520197183
-    locked: 0
   - name: Enemies
     uniqueID: 1450217825
+    locked: 0
+  - name: Foreground
+    uniqueID: 3299047165
+    locked: 0
+  - name: Obstacles
+    uniqueID: 3520197183
     locked: 0

@@ -296,7 +296,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -995920131
-  m_SortingLayer: 2
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -551,8 +551,8 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -118178181
-  m_SortingLayer: 1
+  m_SortingLayerID: -342998513
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -727,6 +727,65 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &738468532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 738468534}
+  - component: {fileID: 738468533}
+  - component: {fileID: 738468535}
+  m_Layer: 0
+  m_Name: PathfindingGrid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &738468533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738468532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cfc0817826af9e4f9ad3b9e2bf6865a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundTilemap: {fileID: 2017273210}
+  obstaclesTilemap: {fileID: 1731861919}
+--- !u!4 &738468534
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738468532}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.727326, y: 2.659822, z: -0.36000013}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &738468535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738468532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45ea16a019468594b9288f0777ec1840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &800539761
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,11 +848,11 @@ GameObject:
   m_Component:
   - component: {fileID: 904159043}
   - component: {fileID: 904159042}
-  - component: {fileID: 904159041}
   - component: {fileID: 904159040}
   - component: {fileID: 904159039}
   - component: {fileID: 904159045}
   - component: {fileID: 904159044}
+  - component: {fileID: 904159046}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -813,10 +872,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ec07f479dac1f6428decb067b09fdb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterTemplate: {fileID: 0}
   moveSpeed: 1
-  snapToGrid: 1
-  targetIndicatorPrefab: {fileID: 0}
-  hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  stoppingDistance: 0.1
+  showPath: 1
+  pathColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!114 &904159040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -831,22 +891,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterTemplate: {fileID: 11400000, guid: 887654167a4a7d2428fd743d71781bfd, type: 2}
   spriteRenderer: {fileID: 0}
---- !u!114 &904159041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 904159038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ec07f479dac1f6428decb067b09fdb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 1
-  snapToGrid: 1
-  targetIndicatorPrefab: {fileID: 0}
-  hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!212 &904159042
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -950,8 +994,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.2, y: 0.45}
+  m_Offset: {x: 0.0013241358, y: -0.009269014}
+  m_Size: {x: 0.11525478, y: 0.1454468}
   m_Direction: 0
 --- !u!50 &904159045
 Rigidbody2D:
@@ -980,6 +1024,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!95 &904159046
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904159038}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d1c6d7df68a290d4499fc135449a7288, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &916058912
 GameObject:
   m_ObjectHideFlags: 3
@@ -1209,7 +1275,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -774770113
-  m_SortingLayer: 4
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -151852,3 +151918,4 @@ SceneRoots:
   - {fileID: 800539763}
   - {fileID: 249346531}
   - {fileID: 2120227623}
+  - {fileID: 738468534}

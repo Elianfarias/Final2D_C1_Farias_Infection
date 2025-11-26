@@ -1,224 +1,185 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+using RPGCorruption.Data;
 
 namespace RPGCorruption.Map
 {
     /// <summary>
-    /// Controla el movimiento del jugador en el mapa con click-to-move.
+    /// Handles player movement using A* pathfinding.
+    /// Click on the map to move the player.
     /// </summary>
-    [RequireComponent(typeof(SpriteRenderer))]
     public class PlayerMovement : MonoBehaviour
     {
-        [Header("Movement")]
+        [Header("Movement Settings")]
+        [SerializeField] private CharacterData characterTemplate;
         [SerializeField] private float moveSpeed = 5f;
-        [SerializeField] private bool snapToGrid = true;
+        [SerializeField] private float stoppingDistance = 0.1f;
 
         [Header("Visual Feedback")]
-        [SerializeField] private GameObject targetIndicatorPrefab;
-        [SerializeField] private Color hoverColor = Color.yellow;
+        [SerializeField] private bool showPath = true;
+        [SerializeField] private Color pathColor = Color.cyan;
 
-        private Vector3 targetPosition;
+        private Pathfinding pathfinding;
+        private List<Vector3> currentPath;
+        private int currentWaypointIndex = 0;
         private bool isMoving = false;
-        private GameObject targetIndicator;
-        private SpriteRenderer spriteRenderer;
+        private Animator animator;
 
-        // Estado
         public bool IsMoving => isMoving;
-        public Vector3 TargetPosition => targetPosition;
+        public List<Vector3> CurrentPath => currentPath;
 
-        private void Awake()
+        private void Start()
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-            targetPosition = transform.position;
-
-            // Crear indicador de destino si no se asignó prefab
-            if (targetIndicatorPrefab == null)
-            {
-                CreateDefaultIndicator();
-            }
+            pathfinding = Pathfinding.Instance;
+            animator = GetComponent<Animator>();
         }
 
         private void Update()
         {
-            HandleInput();
-            HandleMovement();
+            HandleMouseInput();
+            MoveAlongPath();
         }
 
         /// <summary>
-        /// Maneja el input del mouse
+        /// Draw path in game view using Debug.DrawLine
         /// </summary>
-        private void HandleInput()
+        private void LateUpdate()
         {
-            // Click izquierdo para mover
+            if (!showPath || currentPath == null || currentPath.Count == 0)
+                return;
+
+            for (int i = 0; i < currentPath.Count - 1; i++)
+            {
+                Debug.DrawLine(currentPath[i], currentPath[i + 1], pathColor);
+            }
+        }
+
+        /// <summary>
+        /// Visualize path in Scene View and Game View
+        /// </summary>
+        private void OnDrawGizmos()
+        {
+            if (!showPath || currentPath == null || currentPath.Count == 0)
+                return;
+
+            Gizmos.color = pathColor;
+
+            for (int i = 0; i < currentPath.Count - 1; i++)
+            {
+                Gizmos.DrawLine(currentPath[i], currentPath[i + 1]);
+            }
+
+            foreach (Vector3 waypoint in currentPath)
+            {
+                Gizmos.DrawSphere(waypoint, 0.15f);
+            }
+
+            if (isMoving && currentWaypointIndex < currentPath.Count)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawSphere(currentPath[currentWaypointIndex], 0.25f);
+            }
+        }
+
+        /// <summary>
+        /// Handles mouse click to set destination
+        /// </summary>
+        private void HandleMouseInput()
+        {
             if (Input.GetMouseButtonDown(0))
             {
                 Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 mouseWorldPos.z = 0;
 
-                SetTargetPosition(mouseWorldPos);
-            }
-
-            // Mostrar feedback al pasar el mouse
-            if (Input.GetMouseButton(0) == false)
-            {
-                ShowHoverFeedback();
+                SetDestination(mouseWorldPos);
             }
         }
 
         /// <summary>
-        /// Establece la posición objetivo
+        /// Sets a new destination and calculates path
+        /// </summary>
+        public void SetDestination(Vector3 targetPosition)
+        {
+            if (pathfinding == null)
+                return;
+
+            currentPath = pathfinding.FindPath(transform.position, targetPosition);
+
+            if (currentPath != null && currentPath.Count > 0)
+            {
+                currentWaypointIndex = 0;
+                isMoving = true;
+            }
+            else
+                isMoving = false;
+        }
+
+        /// <summary>
+        /// Moves the player along the calculated path
+        /// </summary>
+        private void MoveAlongPath()
+        {
+            if (!isMoving || currentPath == null || currentPath.Count == 0)
+            {
+                animator.SetInteger("Axis_Walk", (int)AxisWalkEnum.Idle);
+                return;
+            }
+
+            if (currentWaypointIndex >= currentPath.Count)
+            {
+                StopMoving();
+                return;
+            }
+
+            Vector3 targetWaypoint = currentPath[currentWaypointIndex];
+            Vector3 moveDirection = (targetWaypoint - transform.position).normalized;
+            transform.position += moveSpeed * Time.deltaTime * moveDirection;
+            bool moveHorizontal = Mathf.Abs(moveDirection.x) > Mathf.Abs(moveDirection.y);
+
+            if (moveHorizontal)
+            {
+                if (moveDirection.x > 0)
+                    animator.SetInteger("Axis_Walk", (int)AxisWalkEnum.Right);
+                else
+                    animator.SetInteger("Axis_Walk", (int)AxisWalkEnum.Left);
+            }
+            else
+            {
+                if (moveDirection.y > 0)
+                    animator.SetInteger("Axis_Walk", (int)AxisWalkEnum.Top);
+                else
+                    animator.SetInteger("Axis_Walk", (int)AxisWalkEnum.Down);
+            }
+
+            float distanceToWaypoint = Vector3.Distance(transform.position, targetWaypoint);
+
+            if (distanceToWaypoint <= stoppingDistance)
+            {
+                currentWaypointIndex++;
+
+                if (currentWaypointIndex >= currentPath.Count)
+                    StopMoving();
+            }
+        }
+
+        /// <summary>
+        /// Stops current movement
+        /// </summary>
+        public void StopMoving()
+        {
+            isMoving = false;
+            currentPath = null;
+            currentWaypointIndex = 0;
+
+            Debug.Log("Reached destination!");
+        }
+
+        /// <summary>
+        /// For external scripts to set a target position
         /// </summary>
         public void SetTargetPosition(Vector3 position)
         {
-            if (snapToGrid && TileGrid.Instance != null)
-            {
-                targetPosition = TileGrid.Instance.SnapToGrid(position);
-            }
-            else
-            {
-                targetPosition = position;
-                targetPosition.z = 0;
-            }
-
-            isMoving = true;
-
-            // Actualizar indicador visual
-            UpdateTargetIndicator();
-        }
-
-        /// <summary>
-        /// Maneja el movimiento hacia el objetivo
-        /// </summary>
-        private void HandleMovement()
-        {
-            if (!isMoving) return;
-
-            // Mover hacia el objetivo
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                targetPosition,
-                moveSpeed * Time.deltaTime
-            );
-
-            // Verificar si llegó al destino
-            if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
-            {
-                transform.position = targetPosition;
-                isMoving = false;
-
-                // Ocultar indicador
-                if (targetIndicator != null)
-                {
-                    targetIndicator.SetActive(false);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Muestra feedback visual al pasar el mouse
-        /// </summary>
-        private void ShowHoverFeedback()
-        {
-            // TODO: Implementar highlight de tiles al pasar el mouse
-            // Por ahora solo cambiamos el cursor
-        }
-
-        /// <summary>
-        /// Actualiza el indicador de destino
-        /// </summary>
-        private void UpdateTargetIndicator()
-        {
-            if (targetIndicator == null) return;
-
-            targetIndicator.transform.position = targetPosition;
-            targetIndicator.SetActive(true);
-        }
-
-        /// <summary>
-        /// Crea un indicador de destino por defecto
-        /// </summary>
-        private void CreateDefaultIndicator()
-        {
-            targetIndicator = new GameObject("TargetIndicator");
-            SpriteRenderer sr = targetIndicator.AddComponent<SpriteRenderer>();
-
-            // Crear sprite circular simple
-            Texture2D texture = new Texture2D(32, 32);
-            Color[] pixels = new Color[32 * 32];
-
-            for (int y = 0; y < 32; y++)
-            {
-                for (int x = 0; x < 32; x++)
-                {
-                    float dx = x - 16;
-                    float dy = y - 16;
-                    float distance = Mathf.Sqrt(dx * dx + dy * dy);
-
-                    if (distance < 12 && distance > 10)
-                    {
-                        pixels[y * 32 + x] = hoverColor;
-                    }
-                    else
-                    {
-                        pixels[y * 32 + x] = Color.clear;
-                    }
-                }
-            }
-
-            texture.SetPixels(pixels);
-            texture.Apply();
-
-            sr.sprite = Sprite.Create(texture, new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f), 32);
-            sr.sortingOrder = -1;
-
-            targetIndicator.SetActive(false);
-        }
-
-        /// <summary>
-        /// Detiene el movimiento
-        /// </summary>
-        public void Stop()
-        {
-            isMoving = false;
-            targetPosition = transform.position;
-
-            if (targetIndicator != null)
-            {
-                targetIndicator.SetActive(false);
-            }
-        }
-
-        /// <summary>
-        /// Teleporta el jugador a una posición
-        /// </summary>
-        public void TeleportTo(Vector3 position)
-        {
-            Stop();
-
-            if (snapToGrid && TileGrid.Instance != null)
-            {
-                transform.position = TileGrid.Instance.SnapToGrid(position);
-            }
-            else
-            {
-                transform.position = position;
-                transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-            }
-
-            targetPosition = transform.position;
-        }
-
-        /// <summary>
-        /// Dibuja debug info
-        /// </summary>
-        private void OnDrawGizmos()
-        {
-            if (isMoving)
-            {
-                Gizmos.color = Color.green;
-                Gizmos.DrawLine(transform.position, targetPosition);
-                Gizmos.DrawWireSphere(targetPosition, 0.3f);
-            }
+            SetDestination(position);
         }
     }
 }
