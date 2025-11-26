@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      OrbPlant_0: 8602627635598654329
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

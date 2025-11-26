@@ -241,7 +241,11 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Spark_0: 4641428447314951278
+      Spark_1: 8225839548581295586
+      Spark_2: 7946630753430100853
+      Spark_3: -4075050256211803965
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

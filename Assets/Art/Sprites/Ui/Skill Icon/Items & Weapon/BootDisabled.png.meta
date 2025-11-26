@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BootDisabled_0: 8259108488230064799
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

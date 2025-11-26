@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      JoystickRightPressed_0: 7480566120196597506
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

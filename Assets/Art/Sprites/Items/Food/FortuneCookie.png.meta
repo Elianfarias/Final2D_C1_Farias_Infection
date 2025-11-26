@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      FortuneCookie_0: -232735043300594234
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

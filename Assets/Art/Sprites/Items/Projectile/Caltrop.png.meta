@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Caltrop_0: -2691236374176435042
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

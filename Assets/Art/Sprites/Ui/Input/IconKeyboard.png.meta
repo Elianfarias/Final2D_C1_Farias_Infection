@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      IconKeyboard_0: 8101491979357154558
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

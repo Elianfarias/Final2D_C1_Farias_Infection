@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BackgroundBottle_0: 5796356315092296830
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

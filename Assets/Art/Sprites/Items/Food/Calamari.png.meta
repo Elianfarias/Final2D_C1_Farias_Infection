@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Calamari_0: 1746020948478064567
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

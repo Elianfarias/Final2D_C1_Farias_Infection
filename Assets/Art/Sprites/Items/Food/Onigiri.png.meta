@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Onigiri_0: -5454308920603775034
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

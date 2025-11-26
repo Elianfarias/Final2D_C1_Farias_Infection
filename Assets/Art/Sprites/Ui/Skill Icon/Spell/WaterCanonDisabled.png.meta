@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      WaterCanonDisabled_0: 9155182103438799204
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

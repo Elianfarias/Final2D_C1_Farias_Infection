@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      FacesetLioness_0: 8035681071636462659
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

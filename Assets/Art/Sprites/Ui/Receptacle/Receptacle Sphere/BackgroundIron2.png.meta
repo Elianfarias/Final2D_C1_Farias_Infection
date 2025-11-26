@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BackgroundIron2_0: 1038979145058962751
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

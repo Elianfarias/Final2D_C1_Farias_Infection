@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Necromancy_0: -7841636702536913860
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
