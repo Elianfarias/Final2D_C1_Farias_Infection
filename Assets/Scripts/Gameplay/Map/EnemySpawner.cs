@@ -18,9 +18,6 @@ namespace RPGCorruption.Map
         [SerializeField] private Vector2 spawnAreaMax = new(10, 10);
         [SerializeField] private List<EnemyData> randomEnemyPool = new();
 
-        [Header("Prefab")]
-        [SerializeField] private GameObject enemyPrefab;
-
         private List<EnemyMapEntity> spawnedEnemies = new();
 
         // Properties
@@ -60,21 +57,18 @@ namespace RPGCorruption.Map
 
             GameObject enemyObj;
 
-            // Usar prefab si está asignado, sino crear desde cero
-            if (enemyPrefab != null)
-                enemyObj = Instantiate(enemyPrefab, position, Quaternion.identity, transform);
-            else
-                enemyObj = CreateEnemyGameObject(position);
+            enemyObj = CreateEnemyGameObject(position);
 
             enemyObj.name = $"{enemyData.CharacterName} ({enemyData.Level})";
+            enemyObj.layer = enemyData.Layer;
+            SpriteRenderer spriteEnemy = enemyObj.GetComponent<SpriteRenderer>();
+            spriteEnemy.sortingLayerName = enemyData.SortingLayerName;
 
-            // Configurar componente EnemyMapEntity
             if (!enemyObj.TryGetComponent<EnemyMapEntity>(out var enemy))
             {
                 enemy = enemyObj.AddComponent<EnemyMapEntity>();
             }
 
-            // Usar reflection para asignar el enemyData (ya que es SerializeField privado)
             var field = typeof(EnemyMapEntity).GetField("enemyTemplate",
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             field?.SetValue(enemy, enemyData);
@@ -83,7 +77,6 @@ namespace RPGCorruption.Map
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             bossField?.SetValue(enemy, isBoss);
 
-            // Forzar Start() si el objeto ya estaba activo
             enemy.SendMessage("Start", SendMessageOptions.DontRequireReceiver);
 
             spawnedEnemies.Add(enemy);

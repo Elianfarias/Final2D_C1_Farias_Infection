@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1387dea1979b71b4b82b37360377da6d, type: 3}
-  m_Name: Bear
+  m_Name: DemonEye
   m_EditorClassIdentifier: 
-  characterName: Bear
+  characterName: Demon Eye
   characterId: 1
   description: test
   baseMaxHP: 100
@@ -27,10 +27,14 @@ MonoBehaviour:
   defenseGrowth: 1
   speedGrowth: 1
   startingSkills: []
-  portrait: {fileID: -10524483601426386, guid: 1e917d2022a74f34f8bfac35e686cddb, type: 3}
-  battleSprite: {fileID: -10524483601426386, guid: 1e917d2022a74f34f8bfac35e686cddb, type: 3}
-  corruptedSprite: {fileID: -10524483601426386, guid: 1e917d2022a74f34f8bfac35e686cddb, type: 3}
-  enemyType: 0
+  portrait: {fileID: -7527145504033472756, guid: 58f90f7b031361b47987b9d9bda55c85, type: 3}
+  battleSprite: {fileID: -2090075751, guid: 981835464e33525418849f17576c2343, type: 3}
+  corruptedSprite: {fileID: -2090075751, guid: 981835464e33525418849f17576c2343, type: 3}
+  enemyType: 2
+  layer:
+    serializedVersion: 2
+    m_Bits: 64
+  sortingLayerName: Enemies
   level: 1
   isBoss: 0
   isMiniBoss: 0
@@ -39,7 +43,7 @@ MonoBehaviour:
   dropTable: []
   aiBehavior: 0
   aggroRange: 5
-  mapSprite: {fileID: -10524483601426386, guid: 1e917d2022a74f34f8bfac35e686cddb, type: 3}
+  mapSprite: {fileID: -2090075751, guid: 981835464e33525418849f17576c2343, type: 3}
   mapSize: {x: 1, y: 1}
   baseInfectionLevel: 0
   canInfectPlayers: 1

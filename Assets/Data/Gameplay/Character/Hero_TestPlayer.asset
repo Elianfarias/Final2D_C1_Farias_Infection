@@ -27,6 +27,6 @@ MonoBehaviour:
   defenseGrowth: 1
   speedGrowth: 1
   startingSkills: []
-  portrait: {fileID: 4814271557941635497, guid: 8aa14bd19d7365f4f82753263ada645c, type: 3}
-  battleSprite: {fileID: 4814271557941635497, guid: 8aa14bd19d7365f4f82753263ada645c, type: 3}
-  corruptedSprite: {fileID: 4814271557941635497, guid: 8aa14bd19d7365f4f82753263ada645c, type: 3}
+  portrait: {fileID: -7527145504033472756, guid: ab4ea3ae737b2a3458018e8c514f2468, type: 3}
+  battleSprite: {fileID: -613914356, guid: 12130240d29c7d0468811f56c7f0dbc2, type: 3}
+  corruptedSprite: {fileID: -1490712961, guid: 12130240d29c7d0468811f56c7f0dbc2, type: 3}
