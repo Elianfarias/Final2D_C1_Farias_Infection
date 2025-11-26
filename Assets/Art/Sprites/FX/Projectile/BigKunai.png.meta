@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BigKunai_0: 9051921929228519823
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

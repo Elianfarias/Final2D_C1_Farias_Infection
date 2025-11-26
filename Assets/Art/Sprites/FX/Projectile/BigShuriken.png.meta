@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BigShuriken_0: 292471005697685698
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

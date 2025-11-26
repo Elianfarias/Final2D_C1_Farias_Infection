@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ScrollFire_0: -4026627026602525782
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

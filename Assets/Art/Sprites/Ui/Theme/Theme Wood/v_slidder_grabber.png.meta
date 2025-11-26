@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      v_slidder_grabber_0: 7727603091161158779
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      FishNet_0: 3905234230869709452
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

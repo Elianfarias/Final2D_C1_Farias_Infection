@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      LuckUpgrade_0: -8761773375332735843
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

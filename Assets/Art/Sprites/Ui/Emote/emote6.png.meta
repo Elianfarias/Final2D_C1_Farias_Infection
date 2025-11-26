@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      emote6_0: -6884290072670057205
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

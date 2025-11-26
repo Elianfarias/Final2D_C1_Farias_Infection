@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      slider_progress_0: -1513774267364819124
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

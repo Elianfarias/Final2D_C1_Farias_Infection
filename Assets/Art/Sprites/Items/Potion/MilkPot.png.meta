@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      MilkPot_0: -5041735488819484629
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

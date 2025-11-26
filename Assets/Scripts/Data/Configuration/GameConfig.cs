@@ -13,7 +13,6 @@ namespace RPGCorruption.Data
 
         /// <summary>
         /// Instancia global del GameConfig.
-        /// IMPORTANTE: Debe ser asignada manualmente en el GameManager al inicio.
         /// </summary>
         public static GameConfig Instance
         {
@@ -30,7 +29,7 @@ namespace RPGCorruption.Data
 
         [Header("Progresión")]
         [SerializeField] private int maxLevel = 50;
-        [SerializeField] private AnimationCurve expCurve; // Curva de XP requerida por nivel
+        [SerializeField] private AnimationCurve expCurve;
         [SerializeField] private int baseExpRequired = 100;
         [SerializeField] private float expMultiplier = 1.5f;
 

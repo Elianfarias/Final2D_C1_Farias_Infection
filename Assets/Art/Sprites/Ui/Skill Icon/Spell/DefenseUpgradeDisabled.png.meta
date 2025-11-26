@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      DefenseUpgradeDisabled_0: -4875109684069104391
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

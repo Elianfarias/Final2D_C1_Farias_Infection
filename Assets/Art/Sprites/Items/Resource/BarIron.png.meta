@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BarIron_0: 1844113576766869519
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

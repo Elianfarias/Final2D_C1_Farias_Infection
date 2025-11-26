@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Amulet_0: 9090724530243979454
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

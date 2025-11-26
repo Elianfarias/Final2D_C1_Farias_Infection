@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      LifeBarMiniProgress_0: 7107526608384918283
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

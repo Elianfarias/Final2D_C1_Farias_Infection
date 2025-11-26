@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      tab_hover_0: -911694024083334007
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

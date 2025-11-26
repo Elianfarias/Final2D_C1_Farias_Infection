@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      QuickSand32x32_0: 1471336669273319529
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      SnowDisabled_0: -2386069393459200036
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

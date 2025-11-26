@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      SpriteSheetWhite_0: 8373129155692390984
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

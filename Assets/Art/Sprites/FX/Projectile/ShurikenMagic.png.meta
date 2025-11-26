@@ -193,7 +193,9 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ShurikenMagic_0: 2036395236904036095
+      ShurikenMagic_1: 173368384540566876
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

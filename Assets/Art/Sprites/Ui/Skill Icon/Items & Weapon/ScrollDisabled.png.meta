@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ScrollDisabled_0: 132522856593005287
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

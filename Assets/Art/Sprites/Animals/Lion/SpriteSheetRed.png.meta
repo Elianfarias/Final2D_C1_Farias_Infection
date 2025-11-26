@@ -169,7 +169,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      SpriteSheetRed_0: -4909510200265568249
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -21,17 +21,14 @@ namespace RPGCorruption.Core.Managers
         [SerializeField] private int maxSaveSlots = 3;
         [SerializeField] private bool createBackups = true;
 
-        // Paths
         private string saveDirectory;
         private const string SAVE_FILE_PREFIX = "save_slot_";
         private const string SAVE_FILE_EXTENSION = ".json";
         private const string BACKUP_SUFFIX = "_backup";
 
-        // Current loaded save
         private SaveData currentSave;
         private int currentSlotIndex = -1;
 
-        // Properties
         public bool HasCurrentSave => currentSave != null;
         public int CurrentSlotIndex => currentSlotIndex;
         public SaveData CurrentSave => currentSave;
