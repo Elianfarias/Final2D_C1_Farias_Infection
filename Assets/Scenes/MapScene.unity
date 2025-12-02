@@ -818,7 +818,7 @@ MonoBehaviour:
   enemiesToSpawn: []
   spawnOnStart: 1
   enableRandomSpawning: 1
-  maxRandomEnemies: 5
+  maxRandomEnemies: 10
   spawnAreaMin: {x: -10, y: -10}
   spawnAreaMax: {x: 10, y: 10}
   randomEnemyPool:

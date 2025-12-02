@@ -59,6 +59,7 @@ namespace RPGCorruption.Combat
         public void StartBattle(List<CharacterInstance> players, List<EnemyData> enemyData)
         {
             enemyParty = new List<CharacterInstance>();
+
             foreach (var enemy in enemyData)
             {
                 var enemyInstance = new CharacterInstance(enemy, enemy.Level);

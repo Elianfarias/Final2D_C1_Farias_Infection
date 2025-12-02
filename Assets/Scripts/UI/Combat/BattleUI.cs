@@ -6,10 +6,6 @@ using RPGCorruption.Data.Runtime;
 
 namespace RPGCorruption.Combat
 {
-    /// <summary>
-    /// Interfaz de usuario para el sistema de combate.
-    /// Muestra información de personajes y botones de acción.
-    /// </summary>
     public class BattleUI : MonoBehaviour
     {
         [Header("References")]
@@ -175,9 +171,14 @@ namespace RPGCorruption.Combat
 
             GameObject infoObj = Instantiate(characterInfoPrefab, parent);
 
-            TextMeshProUGUI nameText = infoObj.transform.Find("NameText")?.GetComponent<TextMeshProUGUI>();
-            TextMeshProUGUI hpText = infoObj.transform.Find("HPText")?.GetComponent<TextMeshProUGUI>();
-            Slider hpSlider = infoObj.transform.Find("HPSlider")?.GetComponent<Slider>();
+            Transform nameTextTransform = infoObj.transform.Find("NameText");
+            TextMeshProUGUI nameText = nameTextTransform != null ? nameTextTransform.GetComponent<TextMeshProUGUI>() : null;
+
+            Transform hpTextTransform = infoObj.transform.Find("HPText");
+            TextMeshProUGUI hpText = hpTextTransform != null ? hpTextTransform.GetComponent<TextMeshProUGUI>() : null;
+
+            Transform hpSliderTransform = infoObj.transform.Find("HPSlider");
+            Slider hpSlider = hpSliderTransform != null ? hpSliderTransform.GetComponent<Slider>() : null;
 
             if (nameText != null)
                 nameText.text = character.Template.CharacterName;
@@ -258,7 +259,7 @@ namespace RPGCorruption.Combat
         {
             ClearEnemyTargetButtons();
 
-            if (battleManager.EnemyParty == null || targetSelectionPanel == null)
+            if (battleManager == null || battleManager.EnemyParty == null || targetSelectionPanel == null)
                 return;
 
             if (targetButton == null)
@@ -270,7 +271,10 @@ namespace RPGCorruption.Combat
 
                 Button buttonInstance = Instantiate(targetButton, targetSelectionPanel.transform);
 
-                TextMeshProUGUI textComponent = buttonInstance.GetComponentInChildren<TextMeshProUGUI>();
+                TextMeshProUGUI textComponent = null;
+                Transform textTransform = buttonInstance.transform.GetComponentInChildren<Transform>();
+                if (textTransform != null)
+                    textComponent = buttonInstance.GetComponentInChildren<TextMeshProUGUI>();
 
                 if (textComponent != null)
                 {

@@ -4,10 +4,6 @@ using RPGCorruption.Data;
 
 namespace RPGCorruption.Map
 {
-    /// <summary>
-    /// Handles player movement using A* pathfinding.
-    /// Click on the map to move the player.
-    /// </summary>
     public class PlayerMovement : MonoBehaviour
     {
         [Header("Movement Settings")]
@@ -40,9 +36,6 @@ namespace RPGCorruption.Map
             MoveAlongPath();
         }
 
-        /// <summary>
-        /// Draw path in game view using Debug.DrawLine
-        /// </summary>
         private void LateUpdate()
         {
             if (!showPath || currentPath == null || currentPath.Count == 0)
@@ -54,9 +47,85 @@ namespace RPGCorruption.Map
             }
         }
 
-        /// <summary>
-        /// Visualize path in Scene View and Game View
-        /// </summary>
+        private void HandleMouseInput()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                mouseWorldPos.z = 0;
+
+                SetDestination(mouseWorldPos);
+            }
+        }
+
+        public void SetDestination(Vector3 targetPosition)
+        {
+            if (pathfinding == null)
+                return;
+
+            currentPath = pathfinding.FindPath(transform.position, targetPosition);
+
+            if (currentPath != null && currentPath.Count > 0)
+            {
+                currentWaypointIndex = 0;
+                isMoving = true;
+            }
+            else
+                isMoving = false;
+        }
+
+        private void MoveAlongPath()
+        {
+            if (!isMoving || currentPath == null || currentPath.Count == 0)
+            {
+                animator.SetInteger("State", (int)AxisWalkEnum.Idle);
+                return;
+            }
+
+            if (currentWaypointIndex >= currentPath.Count)
+            {
+                StopMoving();
+                return;
+            }
+
+            Vector3 targetWaypoint = currentPath[currentWaypointIndex];
+            Vector3 moveDirection = (targetWaypoint - transform.position).normalized;
+            transform.position += moveSpeed * Time.deltaTime * moveDirection;
+            bool moveHorizontal = Mathf.Abs(moveDirection.x) > Mathf.Abs(moveDirection.y);
+
+            if (moveHorizontal)
+            {
+                if (moveDirection.x > 0)
+                    animator.SetInteger("State", (int)AxisWalkEnum.Right);
+                else
+                    animator.SetInteger("State", (int)AxisWalkEnum.Left);
+            }
+            else
+            {
+                if (moveDirection.y > 0)
+                    animator.SetInteger("State", (int)AxisWalkEnum.Top);
+                else
+                    animator.SetInteger("State", (int)AxisWalkEnum.Down);
+            }
+
+            float distanceToWaypoint = Vector3.Distance(transform.position, targetWaypoint);
+
+            if (distanceToWaypoint <= stoppingDistance)
+            {
+                currentWaypointIndex++;
+
+                if (currentWaypointIndex >= currentPath.Count)
+                    StopMoving();
+            }
+        }
+
+        public void StopMoving()
+        {
+            isMoving = false;
+            currentPath = null;
+            currentWaypointIndex = 0;
+        }
+
         private void OnDrawGizmos()
         {
             if (!showPath || currentPath == null || currentPath.Count == 0)
@@ -79,107 +148,6 @@ namespace RPGCorruption.Map
                 Gizmos.color = Color.yellow;
                 Gizmos.DrawSphere(currentPath[currentWaypointIndex], 0.25f);
             }
-        }
-
-        /// <summary>
-        /// Handles mouse click to set destination
-        /// </summary>
-        private void HandleMouseInput()
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                mouseWorldPos.z = 0;
-
-                SetDestination(mouseWorldPos);
-            }
-        }
-
-        /// <summary>
-        /// Sets a new destination and calculates path
-        /// </summary>
-        public void SetDestination(Vector3 targetPosition)
-        {
-            if (pathfinding == null)
-                return;
-
-            currentPath = pathfinding.FindPath(transform.position, targetPosition);
-
-            if (currentPath != null && currentPath.Count > 0)
-            {
-                currentWaypointIndex = 0;
-                isMoving = true;
-            }
-            else
-                isMoving = false;
-        }
-
-        /// <summary>
-        /// Moves the player along the calculated path
-        /// </summary>
-        private void MoveAlongPath()
-        {
-            if (!isMoving || currentPath == null || currentPath.Count == 0)
-            {
-                animator.SetInteger("Axis_Walk", (int)AxisWalkEnum.Idle);
-                return;
-            }
-
-            if (currentWaypointIndex >= currentPath.Count)
-            {
-                StopMoving();
-                return;
-            }
-
-            Vector3 targetWaypoint = currentPath[currentWaypointIndex];
-            Vector3 moveDirection = (targetWaypoint - transform.position).normalized;
-            transform.position += moveSpeed * Time.deltaTime * moveDirection;
-            bool moveHorizontal = Mathf.Abs(moveDirection.x) > Mathf.Abs(moveDirection.y);
-
-            if (moveHorizontal)
-            {
-                if (moveDirection.x > 0)
-                    animator.SetInteger("Axis_Walk", (int)AxisWalkEnum.Right);
-                else
-                    animator.SetInteger("Axis_Walk", (int)AxisWalkEnum.Left);
-            }
-            else
-            {
-                if (moveDirection.y > 0)
-                    animator.SetInteger("Axis_Walk", (int)AxisWalkEnum.Top);
-                else
-                    animator.SetInteger("Axis_Walk", (int)AxisWalkEnum.Down);
-            }
-
-            float distanceToWaypoint = Vector3.Distance(transform.position, targetWaypoint);
-
-            if (distanceToWaypoint <= stoppingDistance)
-            {
-                currentWaypointIndex++;
-
-                if (currentWaypointIndex >= currentPath.Count)
-                    StopMoving();
-            }
-        }
-
-        /// <summary>
-        /// Stops current movement
-        /// </summary>
-        public void StopMoving()
-        {
-            isMoving = false;
-            currentPath = null;
-            currentWaypointIndex = 0;
-
-            Debug.Log("Reached destination!");
-        }
-
-        /// <summary>
-        /// For external scripts to set a target position
-        /// </summary>
-        public void SetTargetPosition(Vector3 position)
-        {
-            SetDestination(position);
         }
     }
 }

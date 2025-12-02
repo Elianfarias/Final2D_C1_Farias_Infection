@@ -35,14 +35,12 @@ namespace RPGCorruption.Map
         {
             spawnedEnemies.Clear();
 
-            // Spawner enemigos configurados manualmente
             foreach (var spawnData in enemiesToSpawn)
             {
                 if (spawnData.enemyData != null)
                     SpawnEnemy(spawnData.enemyData, spawnData.position, spawnData.isBoss);
             }
 
-            // Spawner enemigos aleatorios si está habilitado
             if (enableRandomSpawning && randomEnemyPool.Count > 0)
                 SpawnRandomEnemies();
         }
@@ -101,7 +99,7 @@ namespace RPGCorruption.Map
         {
             for (int i = 0; i < maxRandomEnemies; i++)
             {
-                Vector3 randomPos = new Vector3(
+                Vector3 randomPos = new(
                     Random.Range(spawnAreaMin.x, spawnAreaMax.x),
                     Random.Range(spawnAreaMin.y, spawnAreaMax.y),
                     0
@@ -125,7 +123,6 @@ namespace RPGCorruption.Map
             }
 
             spawnedEnemies.Clear();
-            Debug.Log("All enemies cleared!");
         }
 
         [ContextMenu("Reset All Enemies")]
@@ -134,12 +131,8 @@ namespace RPGCorruption.Map
             foreach (var enemy in spawnedEnemies)
             {
                 if (enemy != null)
-                {
                     enemy.ResetEnemy();
-                }
             }
-
-            Debug.Log("All enemies reset!");
         }
 
         private void OnDrawGizmosSelected()
@@ -166,7 +159,7 @@ namespace RPGCorruption.Map
 
         private void OnGUI()
         {
-            GUIStyle style = new GUIStyle(GUI.skin.label);
+            GUIStyle style = new(GUI.skin.label);
             style.fontSize = 14;
             style.normal.textColor = Color.white;
 
@@ -185,7 +178,6 @@ namespace RPGCorruption.Map
             GUILayout.EndArea();
         }
     }
-
 
     [System.Serializable]
     public class EnemySpawnData

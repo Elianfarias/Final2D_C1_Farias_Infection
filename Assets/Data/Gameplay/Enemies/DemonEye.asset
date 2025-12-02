@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DemonEye
   m_EditorClassIdentifier: 
   characterName: Demon Eye
-  characterId: 1
+  characterId: 2
   description: test
   baseMaxHP: 100
   baseMaxMP: 50

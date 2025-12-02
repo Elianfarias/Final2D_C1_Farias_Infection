@@ -12,7 +12,6 @@ namespace RPGCorruption.Combat
         private static List<EnemyData> enemyDataList;
         private static string returnSceneName;
 
-        // Singleton
         private static BattleInitializer instance;
         public static BattleInitializer Instance
         {

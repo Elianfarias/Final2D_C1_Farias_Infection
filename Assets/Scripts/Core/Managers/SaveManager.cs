@@ -240,9 +240,6 @@ namespace RPGCorruption.Core.Managers
             }
         }
 
-        /// <summary>
-        /// Restaura desde backup
-        /// </summary>
         public bool RestoreFromBackup(int slotIndex)
         {
             string savePath = GetSaveFilePath(slotIndex);

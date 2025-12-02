@@ -64,16 +64,12 @@ namespace RPGCorruption.Map
             if (!isStationary && distanceToPlayer <= detectionRange)
             {
                 if (!isAggro)
-                {
                     OnAggroStarted();
-                }
 
                 MoveTowardsPlayer();
             }
             else if (isAggro && distanceToPlayer > detectionRange * 1.5f)
-            {
                 OnAggroEnded();
-            }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -81,9 +77,7 @@ namespace RPGCorruption.Map
             if (wasDefeated) return;
 
             if (other.TryGetComponent<PlayerController>(out var playerController))
-            {
                 InitiateBattle(playerController);
-            }
         }
 
         private void UpdateVisual()
@@ -120,14 +114,8 @@ namespace RPGCorruption.Map
         private void InitiateBattle(PlayerController playerController)
         {
             if (enemyTemplate == null)
-            {
-                Debug.LogError("Cannot initiate battle: No EnemyData assigned!");
                 return;
-            }
 
-            Debug.Log($"⚔️ Battle started with {enemyTemplate.CharacterName} (Level {enemyTemplate.Level})!");
-
-            // Iniciar batalla usando BattleInitializer
             Combat.BattleInitializer.StartBattle(
                 playerController.Character,
                 enemyTemplate
@@ -148,7 +136,6 @@ namespace RPGCorruption.Map
 
         private System.Collections.IEnumerator DefeatAnimation()
         {
-            // Fade out
             float duration = 0.5f;
             float elapsed = 0f;
             Color startColor = spriteRenderer.color;
@@ -159,16 +146,13 @@ namespace RPGCorruption.Map
                 float alpha = 1f - (elapsed / duration);
                 spriteRenderer.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
 
-                // Rotar y encoger
                 transform.Rotate(0, 0, 360 * Time.deltaTime * 2);
                 transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, elapsed / duration);
 
                 yield return null;
             }
 
-            // Desactivar o destruir
             gameObject.SetActive(false);
-            // Destroy(gameObject); // Descomentar si prefieres destruir
         }
 
         [ContextMenu("Reset Enemy")]
@@ -185,11 +169,9 @@ namespace RPGCorruption.Map
         {
             if (!showDebugInfo) return;
 
-            // Rango de detección
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, detectionRange);
 
-            // Collider trigger
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, 0.5f);
         }

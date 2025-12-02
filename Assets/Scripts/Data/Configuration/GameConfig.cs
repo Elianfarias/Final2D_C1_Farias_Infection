@@ -2,18 +2,11 @@ using UnityEngine;
 
 namespace RPGCorruption.Data
 {
-    /// <summary>
-    /// Configuración global del juego: balance, curvas de progresión, límites del sistema.
-    /// Un único asset que centraliza valores de diseño.
-    /// </summary>
     [CreateAssetMenu(fileName = "GameConfig", menuName = "RPG/Game Configuration")]
     public class GameConfig : ScriptableObject
     {
         private static GameConfig instance;
 
-        /// <summary>
-        /// Instancia global del GameConfig.
-        /// </summary>
         public static GameConfig Instance
         {
             get
@@ -85,9 +78,6 @@ namespace RPGCorruption.Data
         public float ExpGainMultiplier => expGainMultiplier;
         public float GoldGainMultiplier => goldGainMultiplier;
 
-        /// <summary>
-        /// Calcula la experiencia requerida para alcanzar un nivel específico
-        /// </summary>
         public int GetExpRequiredForLevel(int level)
         {
             if (level <= 1) return 0;
@@ -104,9 +94,6 @@ namespace RPGCorruption.Data
             return Mathf.RoundToInt(baseExpRequired * Mathf.Pow(expMultiplier, level - 1));
         }
 
-        /// <summary>
-        /// Calcula el modificador de defensa basado en el nivel de infección
-        /// </summary>
         public float GetInfectionDefenseModifier(int infectionLevel)
         {
             if (infectionLevel <= 0) return 1f;
@@ -115,9 +102,6 @@ namespace RPGCorruption.Data
             return 1f - (infectionDefenseDebuff * infectionPercent);
         }
 
-        /// <summary>
-        /// Calcula el modificador de daño basado en el nivel de infección
-        /// </summary>
         public float GetInfectionDamageModifier(int infectionLevel)
         {
             if (infectionLevel <= 0) return 1f;
@@ -126,17 +110,11 @@ namespace RPGCorruption.Data
             return 1f + (infectionDamageBonus * infectionPercent);
         }
 
-        /// <summary>
-        /// Verifica si un nivel de infección es crítico
-        /// </summary>
         public bool IsInfectionCritical(int infectionLevel)
         {
             return infectionLevel >= corruptionThreshold;
         }
 
-        /// <summary>
-        /// Verifica si la infección alcanzó el nivel de Game Over
-        /// </summary>
         public bool IsFullyCorrupted(int infectionLevel)
         {
             return infectionLevel >= fullCorruptionLevel;

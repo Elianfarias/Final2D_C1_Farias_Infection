@@ -20,25 +20,21 @@ namespace RPGCorruption.Combat
 
         public void Initialize(List<CharacterInstance> player, List<CharacterInstance> enemies)
         {
-            // Combinar jugadores y enemigos
             allCombatants = new List<CharacterInstance>();
             allCombatants.AddRange(player);
             allCombatants.AddRange(enemies);
 
-            // Ordenar por velocidad (de mayor a menor)
             var sortedBySpeed = allCombatants
                 .Where(c => c.IsAlive)
                 .OrderByDescending(c => c.Speed)
                 .ToList();
 
-            // Crear cola de turnos
             turnQueue = new Queue<CharacterInstance>();
+
             foreach (var combatant in sortedBySpeed)
             {
                 turnQueue.Enqueue(combatant);
             }
-
-            Debug.Log($"Turn order initialized. {turnQueue.Count} combatants ready.");
         }
 
         public CharacterInstance NextTurn()
@@ -78,9 +74,7 @@ namespace RPGCorruption.Combat
 
         public bool IsPlayerTurn()
         {
-            if (currentTurn == null) return false;
-
-            return true;
+            return currentTurn != null;
         }
 
         public void Clear()

@@ -394,16 +394,16 @@ MonoBehaviour:
   allowEscape: 1
   playerParty:
   - characterDataId: 1
-    currentHP: 0
-    currentMP: 0
-    maxHP: 0
-    maxMP: 0
-    level: 0
-    currentExp: 0
-    attack: 0
-    defense: 0
-    speed: 0
-    critChance: 0
+    currentHP: 100
+    currentMP: 100
+    maxHP: 100
+    maxMP: 100
+    level: 1
+    currentExp: 1
+    attack: 100
+    defense: 100
+    speed: 100
+    critChance: 10
     infectionLevel: 0
     equippedWeaponId: 
     equippedArmorId: 
@@ -413,17 +413,17 @@ MonoBehaviour:
     activeStatuses: []
     learnedSkillIds: []
   enemyParty:
-  - characterDataId: 1
-    currentHP: 0
-    currentMP: 0
-    maxHP: 0
-    maxMP: 0
-    level: 0
-    currentExp: 0
-    attack: 0
-    defense: 0
-    speed: 0
-    critChance: 0
+  - characterDataId: 2
+    currentHP: 100
+    currentMP: 100
+    maxHP: 100
+    maxMP: 100
+    level: 1
+    currentExp: 1
+    attack: 50
+    defense: 50
+    speed: 50
+    critChance: 2
     infectionLevel: 0
     equippedWeaponId: 
     equippedArmorId: 
